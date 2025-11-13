@@ -192,3 +192,98 @@ function filtrarCards(texto) {
   });
 }
 
+// Adicionando mapa //
+const btn = document.getElementById("btnLocalizar");
+const resultado = document.getElementById("resultado");
+
+// coordenadas fixas da loja
+const lojaCoords = [-30.000147, -51.200794];
+
+// cria o mapa no footer (único mapa)
+const map = L.map("map").setView(lojaCoords, 15);
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+// marcador fixo da loja
+const lojaMarker = L.marker(lojaCoords).addTo(map)
+  .bindPopup("🏪 Nossa loja está aqui!")
+  .openPopup();
+
+// botão de localização
+btn.addEventListener("click", () => {
+  if (navigator.geolocation) {
+    resultado.innerHTML = "🔍 Buscando sua localização...";
+    navigator.geolocation.getCurrentPosition(showPosition, showError);
+  } else {
+    resultado.innerHTML = "❌ Geolocalização não é suportada neste navegador.";
+  }
+});
+
+function showPosition(position) {
+  const lat = position.coords.latitude;
+  const lon = position.coords.longitude;
+  const userCoords = [lat, lon];
+
+  // calcula distância
+  const distancia = getDistanceFromLatLonInKm(lat, lon, lojaCoords[0], lojaCoords[1]);
+
+  resultado.innerHTML = `
+    📍 <strong>Localização encontrada!</strong><br>
+    🧭 Latitude: ${lat.toFixed(6)}<br>
+    🧭 Longitude: ${lon.toFixed(6)}<br>
+    📏 Distância até a loja: <strong>${distancia.toFixed(2)} km</strong>
+  `;
+
+  // remove linha anterior se existir
+  map.eachLayer(layer => {
+    if (layer instanceof L.Polyline) map.removeLayer(layer);
+  });
+
+  // marcador do usuário
+  L.marker(userCoords).addTo(map)
+    .bindPopup("📍 Você está aqui!").openPopup();
+
+  // linha azul entre loja e usuário
+  L.polyline([lojaCoords, userCoords], { color: "blue" }).addTo(map);
+
+  // ajusta o zoom pra ver os dois
+  const bounds = L.latLngBounds([lojaCoords, userCoords]);
+  map.fitBounds(bounds);
+}
+
+// função pra calcular distância (km)
+function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+  const R = 6371; // raio da Terra em km
+  const dLat = deg2rad(lat2 - lat1);
+  const dLon = deg2rad(lon2 - lon1);
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(deg2rad(lat1)) *
+      Math.cos(deg2rad(lat2)) *
+      Math.sin(dLon / 2) ** 2;
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI / 180);
+}
+
+function showError(error) {
+  switch (error.code) {
+    case error.PERMISSION_DENIED:
+      resultado.innerHTML = "🚫 Permissão negada pelo usuário.";
+      break;
+    case error.POSITION_UNAVAILABLE:
+      resultado.innerHTML = "⚠️ Localização indisponível.";
+      break;
+    case error.TIMEOUT:
+      resultado.innerHTML = "⏱️ Tempo esgotado.";
+      break;
+    default:
+      resultado.innerHTML = "❓ Erro desconhecido.";
+  }
+}
+
+
