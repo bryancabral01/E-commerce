@@ -17,17 +17,44 @@
     crossorigin="">
     </script>
 
-    <title>Shopping</title>
+    <title>Virtual Market</title>
 </head>
-<body>
 
-    <header style="justify-content: space-between;">
-        <span class="material-symbols-outlined icon" onclick="window.location.href='index.html'">Home</span>
-        <h2 class="text-light" >Your Cart</h2>
-        <span class="material-symbols-outlined icon">Shopping_Cart</span>
+<!-- estrutura do cabeçalho -->
+    <header>
+        <div style="margin-left: 50px; display: flex; justify-content: center; align-items: center; gap: 10px;">
+            <h2 style="color: white;">Virtual Market</h2>
+            <span class="material-symbols-outlined" style="color: white; margin-bottom: 5px;">shopping_bag_speed</span>
+        </div>
+        
+    <!-- botão de pesquisa header -->
+        <form class="d-flex" role="search" style="max-width: 400px; margin: auto;">
+            <input id="searchInput" class="form-control me-2" type="search" placeholder="Buscar produtos..." aria-label="Search">
+                <button class="btn" type="submit" style="
+                    background-color: #2b04d8; 
+                    color: white; 
+                    width: 50px; 
+                    display: flex; 
+                    align-items: center; 
+                    justify-content: center;
+                    border: none;
+                    border-radius: 8px;">
+                        <i class="bi bi-search" style="font-size: 1.2rem;"></i>
+                </button>
+                
+                <div id="suggestions" class="list-group position-absolute w-100" style="top: 100%; z-index: 1000;"></div>
+        </form>
+
+        <div style="margin-right: 50px;">
+            <span class="material-symbols-outlined icon" onclick="window.location.href='http://127.0.0.1:5501/index.html'">Home</span>
+            <span class="material-symbols-outlined icon" onclick="window.location.href='http://127.0.0.1:5501/shopping.html'">Shopping_Cart</span>
+            <span class="material-symbols-outlined icon">call</span>
+            <span class="material-symbols-outlined icon">Info</span>
+        </div>
+        
     </header>
 
-    <div class="navbar">
+    <div class="navbar" style="margin-bottom: 120px;">
         <ul class="ul">
             <li><a href="index.html"><button class="btn-nav">Home</button></li></a>
             <li><a href="produtos.html"><button class="btn-nav">Products</button></li></a>
@@ -36,17 +63,12 @@
         </ul>
     </div>
 
-   <main style="min-height: 90vh;">
-    <div id="carrinho-container" class="produtos-container"></div>
-    <div class="total-container" style=" display: flex; position: absolute; bottom: 60px; left: 30px; gap: 10px;">
-      <span class="material-symbols-outlined" style="color: black; margin-top: 6px;">shopping_bag_speed</span>
-      <h3 id="total" >Total: R$ </h3>
-    </div>
+    <!-- estrutura dos cards -->
+        <div id="lista-categorias"></div>
 
-    
-  </main>
+    </main>
 
-  <!-- estrutura do rodapé -->
+    <!-- estrutura do rodapé -->
     <footer>
         <div class="container" style="width: 25%; height: 20vh; padding: 0; margin: 0; border-right: 2px solid white;">
             <p>@Bryan Cabral - 2025</p>

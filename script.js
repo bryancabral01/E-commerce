@@ -1,36 +1,47 @@
-fetch("https://dummyjson.com/products")
-  .then(res => res.json())
-  .then(data => {
+async function carregarDestaques() {
+  const container = document.getElementById("produtos-container");
+  if (!container) return; // evita rodar em páginas sem esse container
+
+  container.innerHTML = "<p>Carregando...</p>";
+
+  try {
+    const res = await fetch("https://dummyjson.com/products?limit=100");
+    const data = await res.json();
     const produtos = data.products;
 
-    const selecionados = produtos; // pega todos os produtos
+    // Embaralha os produtos para escolher aleatórios
+    const destaque = produtos.sort(() => Math.random() - 0.5).slice(0, 8);
 
-    const container = document.getElementById("produto-container");
-    container.innerHTML = selecionados.map(p => montarCard(p)).join("");
+    container.innerHTML = destaque.map(p => montarCard(p)).join("");
 
-    // Ativa botões de carrinho
-    const botoesCarrinho = document.querySelectorAll(".btn-carrinho");
-    botoesCarrinho.forEach((botao, index) => {
-      botao.addEventListener("click", () => {
-        addCarrinho(selecionados[index]);
-      });
+    ativarFuncoesBotoes(destaque);
+
+  } catch (erro) {
+    container.innerHTML = "<p>Erro ao carregar produtos em destaque.</p>";
+    console.error(erro);
+  }
+}
+
+function ativarFuncoesBotoes(lista) {
+  const botoesCarrinho = document.querySelectorAll(".btn-carrinho");
+  botoesCarrinho.forEach((botao, index) => {
+    botao.addEventListener("click", () => {
+      addCarrinho(lista[index]);
     });
-
-    // Ativa botões de comprar
-    const botoesComprar = document.querySelectorAll(".btn-comprar");
-    botoesComprar.forEach((botao, index) => {
-      botao.addEventListener("click", () => {
-        const produtoSelecionado = selecionados[index];
-        addCarrinho(produtoSelecionado);
-        window.location.href = "shopping.html";
-      });
-    });
-  })
-  .catch(error => {
-    console.error("Erro ao carregar produtos", error);
-    document.getElementById("produto-container").innerHTML =
-      "<p>Erro ao carregar produtos</p>";
   });
+
+  const botoesComprar = document.querySelectorAll(".btn-comprar");
+  botoesComprar.forEach((botao, index) => {
+    botao.addEventListener("click", () => {
+      addCarrinho(lista[index]);
+      window.location.href = "shopping.html";
+    });
+  });
+}
+
+// chama automaticamente na página inicial
+carregarDestaques();
+
 
 function montarCard(produto) {
   return `
@@ -38,10 +49,10 @@ function montarCard(produto) {
       <img src="${produto.thumbnail}" alt="${produto.title}">
       <h2>${produto.title}</h2>
       <p>${produto.description}</p>
-      <div class="price">Preço: R$ ${produto.price}</div>
+      <div class="price">Price: R$ ${produto.price}</div>
       <div class="rating">Ranking: ${produto.rating}</div>
       <div class="botoes">
-        <button class="btn btn-success btn-comprar">Comprar</button>
+        <button class="btn btn-success btn-comprar">Buy</button>
         <button class="btn btn-outline-primary btn-carrinho">
           <span class="material-symbols-outlined">add_shopping_cart</span>
         </button>
@@ -73,7 +84,7 @@ if (carrinhoContainer) {
         <h2>${item.title}</h2>
         <p>${item.description}</p>
         <div class="price">Preço: R$ ${item.price.toFixed(2)}</div>
-        <button class="btn btn-success btn-comprar">Comprar</button>
+        <button class="btn btn-success btn-comprar">Buy</button>
         <button class="btn-remover" data-index="${index}">
           <span class="material-symbols-outlined">delete</span>
         </button>
@@ -213,10 +224,10 @@ const lojaMarker = L.marker(lojaCoords).addTo(map)
 // botão de localização
 btn.addEventListener("click", () => {
   if (navigator.geolocation) {
-    resultado.innerHTML = "🔍 Buscando sua localização...";
+    resultado.innerHTML = "🔍 Looking for your location...";
     navigator.geolocation.getCurrentPosition(showPosition, showError);
   } else {
-    resultado.innerHTML = "❌ Geolocalização não é suportada neste navegador.";
+    resultado.innerHTML = "❌ Geolocation is not supported in this browser.";
   }
 });
 
@@ -229,10 +240,10 @@ function showPosition(position) {
   const distancia = getDistanceFromLatLonInKm(lat, lon, lojaCoords[0], lojaCoords[1]);
 
   resultado.innerHTML = `
-    📍 <strong>Localização encontrada!</strong><br>
+    📍 <strong>Location found!</strong><br>
     🧭 Latitude: ${lat.toFixed(6)}<br>
     🧭 Longitude: ${lon.toFixed(6)}<br>
-    📏 Distância até a loja: <strong>${distancia.toFixed(2)} km</strong>
+    📏 Distance to the store: <strong>${distancia.toFixed(2)} km</strong>
   `;
 
   // remove linha anterior se existir
@@ -285,5 +296,66 @@ function showError(error) {
       resultado.innerHTML = "❓ Erro desconhecido.";
   }
 }
+
+// Lista das categorias que você quer usar
+const categorias = {
+  "fragrances": "Frangances",
+  "beauty": "Cosmétics",
+  "home-decoration": "Home Decoration",
+  "groceries": "Food and Drinks"
+};
+
+// Onde todas as categorias vão aparecer
+const listaCategorias = document.getElementById("lista-categorias");
+
+// Função que monta o card do produto (igual a sua)
+function montarCard(produto) {
+  return `
+    <div class="card">
+      <img src="${produto.thumbnail}" alt="${produto.title}">
+      <h2>${produto.title}</h2>
+      <p>${produto.description}</p>
+      <div class="price">Price: R$ ${produto.price}</div>
+      <div class="rating">Ranking: ${produto.rating}</div>
+      <div class="botoes">
+        <button class="btn btn-success btn-comprar">Buy</button>
+        <button class="btn btn-outline-primary btn-carrinho">
+          <span class="material-symbols-outlined">add_shopping_cart</span>
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+// Função principal para criar cada categoria na tela
+async function carregarCategorias() {
+  for (const categoria in categorias) {
+
+    // Cria bloco da categoria
+    const bloco = document.createElement("div");
+    bloco.classList.add("categoria-bloco");
+
+    // Título da categoria
+    bloco.innerHTML = `<h2 class="titulo-categoria">${categorias[categoria]}</h2>`;
+
+    // Div onde ficam os produtos
+    const area = document.createElement("div");
+    area.classList.add("area-produtos");
+
+    bloco.appendChild(area);
+    listaCategorias.appendChild(bloco);
+
+    // Busca os produtos da categoria
+    const res = await fetch(`https://dummyjson.com/products/category/${categoria}`);
+    const data = await res.json();
+
+    // Adiciona os cards do produto
+    area.innerHTML = data.products.map(produto => montarCard(produto)).join("");
+  }
+}
+
+// Chama a função que monta tudo
+carregarCategorias();
+
 
 

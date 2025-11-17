@@ -28,7 +28,7 @@
         </div>
         
     <!-- botão de pesquisa header -->
-        <form style="display: flex" role="search" style="max-width: 400px; margin: 0;">
+        <form class="d-flex" role="search" style="max-width: 400px; margin: auto;">
             <input id="searchInput" class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
                 <button class="btn" type="submit" style="
                     background-color: #2b04d8; 
@@ -48,58 +48,50 @@
         <div style="margin-right: 50px;">
             <span class="material-symbols-outlined icon" onclick="window.location.href='index.html'">Home</span>
             <span class="material-symbols-outlined icon" onclick="window.location.href='shopping.html'">Shopping_Cart</span>
-            <span class="material-symbols-outlined icon" onclick="window.location.href='contato.html'">call</span>
+            <span class="material-symbols-outlined icon">call</span>
             <span class="material-symbols-outlined icon">Info</span>
-        </div>        
+        </div>
+        
     </header>
 
-    <div class="navbar">
+    <div class="navbar" style="margin-bottom: 120px;">
         <ul class="ul">
-            <li><a href="index.html"><button class="btn-nav">Home</button></li></a>
-            <li><a href="produtos.html"><button class="btn-nav">Products</button></li></a>
-            <li><button class="btn-nav" onclick="window.location.href='shopping.html'">Cart</button></li>
-            <li><button class="btn-nav" onclick="window.location.href='contato.html'">Contact</button></li>
+            <li><button class="btn-nav" onclick="location.href='http://127.0.0.1:5501/index.html'">Home</button></li>
+            <li><button class="btn-nav">Products</button></li>
+            <li><button class="btn-nav" onclick="window.location.href='http://127.0.0.1:5501/shopping.html'">Cart</button></li>
+            <li><button class="btn-nav">Contacts</button></li>
         </ul>
     </div>
 
-    <!-- estrutura do carrosel -->
-    <main>
-        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" data-bs-interval="2000">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="imagens/virtual market.png" class="d-block w-100" alt="verduras" data-bs-interval="2000">
-                </div>
+    <main style="height: 78vh; width: 30%; margin: auto;">
+        <!-- Formulário -->
+     <div class="container" style="margin: 50px auto; font-size: 20px;">
+      <h2 class="text-center">Contacts</h2>
+        <form>
+      <div class="mb-3">
+        <label for="nome" class="form-label">Name</label>
+        <input type="text" id="nome" class="form-control" placeholder="Enter your name">
+      </div>
 
-                <div class="carousel-item">
-                    <img src="imagens/verduras.avif" class="d-block w-100" alt="perfumes" data-bs-interval="2000">
-                </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">E-mail</label>
+        <input type="email" id="email" class="form-control" placeholder="example@email.com">
+      </div>
 
-                <div class="carousel-item">
-                    <img src="imagens/frutas.avif" class="d-block w-100" alt="perfumes" data-bs-interval="2000">
-                </div>
+      <div class="mb-3">
+        <label for="mensagem" class="form-label">Message</label>
+        <textarea id="mensagem" class="form-control" rows="5" placeholder="Write something..."></textarea>
+      </div>
 
-                <div class="carousel-item">
-                    <img src="imagens/perfumes.avif" class="d-block w-100" alt="cosmeticos" data-bs-interval="2000">
-                </div>
-
-                <div class="carousel-item">
-                    <img src="imagens/cosmeticos.avif" class="d-block w-100" alt="camas" data-bs-interval="2000">
-                </div>
-
-                <div class="carousel-item">
-                    <img src="imagens/cama.avif" class="d-block w-100" alt="camas" data-bs-interval="2000">
-                </div>
-            </div>
-        </div>
-
-        <div class="container" style="justify-content: center; align-items: center; text-align: center; margin: 70px auto 0px;">
-            <h2>Featured Products</h2>
-        </div>
-
-        <!-- estrutura dos cards -->
-        <div id="produtos-container" class="produtos-container"></div>
+      <button type="submit" class="btn btn-primary">To send</button>
+    </form>
+  </div>
+     </div>
+  </div>
+</body>
+</html>
     </main>
- 
+
     <!-- estrutura do rodapé -->
     <footer>
         <div class="container" style="width: 25%; height: 20vh; padding: 0; margin: 0; border-right: 2px solid white;">
