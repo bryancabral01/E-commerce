@@ -17,22 +17,33 @@
     crossorigin="">
     </script>
 
-    <title>Shopping</title>
+    <title>Virtual Market | Cart</title>
 </head>
 <body>
 
-    <header style="justify-content: space-between;">
-        <span class="material-symbols-outlined icon" onclick="window.location.href='index.html'">Home</span>
+    <header>
+        <div style="margin-left: 50px; display: flex; justify-content: center; align-items: center; gap: 10px;">
+            <h2 style="color: white;">Virtual Market</h2>
+            <span class="material-symbols-outlined" style="color: white; margin-bottom: 5px;">shopping_bag_speed</span>
+        </div>
+
         <h2 class="text-light" >Your Cart</h2>
-        <span class="material-symbols-outlined icon">Shopping_Cart</span>
+
+        <div style="margin-right: 50px;">
+            <span class="material-symbols-outlined icon" onclick="window.location.href='index.html'">Home</span>
+            <span class="material-symbols-outlined icon" onclick="window.location.href='shopping.html'">Shopping_Cart</span>
+            <span class="material-symbols-outlined icon" onclick="window.location.href='contato.html'">call</span>
+            <span class="material-symbols-outlined icon">Info</span>
+        </div>  
+
     </header>
 
     <div class="navbar">
         <ul class="ul">
             <li><a href="index.html"><button class="btn-nav">Home</button></li></a>
             <li><a href="produtos.html"><button class="btn-nav">Products</button></li></a>
-            <li><button class="btn-nav" onclick="window.location.href='shopping.html'">Cart</button></li>
-            <li><button class="btn-nav" onclick="window.location.href='contato.html'">Contact</button></li>
+            <li><a href="shopping.html"><button class="btn-nav">Cart</button></li></a>
+            <li><a href="contato.html"><button class="btn-nav">Contact</button></li></a>
         </ul>
     </div>
 

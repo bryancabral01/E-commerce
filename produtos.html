@@ -14,10 +14,10 @@
     />
     <!-- JS do Leaflet -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-    crossorigin="">
+    crossorigin=""> 
     </script>
 
-    <title>Virtual Market</title>
+    <title>Virtual Market | Products</title>
 </head>
 
 <!-- estrutura do cabeçalho -->
@@ -29,7 +29,7 @@
         
     <!-- botão de pesquisa header -->
         <form class="d-flex" role="search" style="max-width: 400px; margin: auto;">
-            <input id="searchInput" class="form-control me-2" type="search" placeholder="Buscar produtos..." aria-label="Search">
+            <input id="searchInput" class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
                 <button class="btn" type="submit" style="
                     background-color: #2b04d8; 
                     color: white; 
@@ -46,20 +46,20 @@
         </form>
 
         <div style="margin-right: 50px;">
-            <span class="material-symbols-outlined icon" onclick="window.location.href='http://127.0.0.1:5501/index.html'">Home</span>
-            <span class="material-symbols-outlined icon" onclick="window.location.href='http://127.0.0.1:5501/shopping.html'">Shopping_Cart</span>
-            <span class="material-symbols-outlined icon">call</span>
+            <span class="material-symbols-outlined icon" onclick="window.location.href='index.html'">Home</span>
+            <span class="material-symbols-outlined icon" onclick="window.location.href='shopping.html'">Shopping_Cart</span>
+            <span class="material-symbols-outlined icon" onclick="window.location.href='contato.html'">call</span>
             <span class="material-symbols-outlined icon">Info</span>
-        </div>
+        </div> 
         
     </header>
 
-    <div class="navbar" style="margin-bottom: 120px;">
+    <<div class="navbar">
         <ul class="ul">
             <li><a href="index.html"><button class="btn-nav">Home</button></li></a>
             <li><a href="produtos.html"><button class="btn-nav">Products</button></li></a>
-            <li><button class="btn-nav" onclick="window.location.href='shopping.html'">Cart</button></li>
-            <li><button class="btn-nav" onclick="window.location.href='contato.html'">Contact</button></li>
+            <li><a href="shopping.html"><button class="btn-nav">Cart</button></li></a>
+            <li><a href="contato.html"><button class="btn-nav">Contact</button></li></a>
         </ul>
     </div>
 
