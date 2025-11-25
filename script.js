@@ -78,8 +78,7 @@
     const botoesComprar2 = $$(".btn-comprar");
     botoesComprar2.forEach((botao, index) => {
       botao.addEventListener("click", () => {
-        if (lista[index]) addCarrinho(lista[index]);
-        window.location.href = "shopping.html";
+        abrirQR();
       });
     });
   }
@@ -187,15 +186,10 @@ $$(".btn-remover").forEach(btn => {
 });
 
 // botão comprar
-$$(".btn-comprar-carrinho").forEach(btn => {
+const botoesComprarCarrinho = $$(".btn-comprar-carrinho");
+botoesComprarCarrinho.forEach(btn => {
   btn.addEventListener("click", () => {
-    const idx = parseInt(btn.getAttribute("data-index"), 10);
-    const produto = carrinho[idx];
-
-    if (produto) {
-      alert("Compra realizada com sucesso!");
-      removerDoCarrinho(idx);
-    }
+    abrirQR();
   });
 });
 
@@ -396,4 +390,17 @@ $$(".btn-comprar-carrinho").forEach(btn => {
     initMapa();
   });
 
+  function abrirQR() {
+    const qr = document.getElementById("qr-container");
+    if (qr) qr.style.display = "block";
+  }
+
+  function fecharQR() {
+    const qr = document.getElementById("qr-container");
+    if (qr) qr.style.display = "none";
+  }
+
+  document.addEventListener("click", (e) => {
+    if (e.target.id === "fecharQR") fecharQR();
+  });
 })();
